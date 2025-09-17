@@ -1,5 +1,5 @@
 git init
 git add .
 git commit -m "First commit"
-git remote add origin https://github.com/nama-anda/nama-repo.git
+git remote add origin https://github.com/purplemashu/me-cli.git
 git push -u origin main
