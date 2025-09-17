@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ME-CLI Web UI</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; background-color: #f0f2f5; }
+        .container { max-width: 400px; margin: 0 auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 5px; }
+        button:hover { background-color: #0056b3; }
+        h1 { color: #333; }
+        #hasil-api { font-size: 20px; font-weight: bold; margin-top: 20px; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ME-CLI Web</h1>
+        <p>Aplikasi web sederhana untuk mengecek saldo.</p>
+        <button onclick="cekSaldo()">Cek Saldo</button>
+        <div id="hasil-api"></div>
+    </div>
+
+    <script>
+        async function cekSaldo() {
+            const hasilApiDiv = document.getElementById('hasil-api');
+            hasilApiDiv.textContent = "Memuat...";
+
+            try {
+                // Panggil backend Python yang ada di folder 'api'
+                const response = await fetch('/api/cek_saldo');
+                const data = await response.json();
+
+                if (response.ok) {
+                    hasilApiDiv.style.color = 'green';
+                    hasilApiDiv.textContent = data.saldo;
+                } else {
+                    hasilApiDiv.style.color = 'red';
+                    hasilApiDiv.textContent = 'Gagal: ' + data.pesan;
+                }
+            } catch (error) {
+                hasilApiDiv.style.color = 'red';
+                hasilApiDiv.textContent = 'Terjadi kesalahan koneksi.';
+            }
+        }
+    </script>
+</body>
+</html>
